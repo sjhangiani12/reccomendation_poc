@@ -42,4 +42,7 @@ def reccomend_book():
 
     return jsonify({'query': query, 'query': titles})
 
-serve(app, host='0.0.0.0', port=3000)
+if __name__ == '__main__':
+    app.run()
+
+# serve(app, host='0.0.0.0', port=3000)
