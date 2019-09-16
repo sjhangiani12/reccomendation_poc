@@ -234,12 +234,6 @@ def matching_score(num_responses, query):
 
     preprocessed_query = preprocess(query)
     tokens = word_tokenize(str(preprocessed_query))
-
-    print("Matching Score")
-    print("\nQuery:", query)
-    print("")
-    print(tokens)
-    
     query_weights = {}
 
     for key in tf_idf:
@@ -250,15 +244,11 @@ def matching_score(num_responses, query):
             except:
                 query_weights[key[0]] = tf_idf[key]
     
-    query_weights = sorted(query_weights.items(), key=lambda x: x[1], reverse=True)
-
-    print("")
-    
+    query_weights = sorted(query_weights.items(), key=lambda x: x[1], reverse=True)    
     list_of_titles = []
     
     for i in query_weights[:num_responses]:
         list_of_titles.append(i[0])
     
-    print(list_of_titles)
     return query, list_of_titles
     
