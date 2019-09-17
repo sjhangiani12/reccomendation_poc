@@ -1,7 +1,7 @@
 from flask import Flask, jsonify, request
 from waitress import serve
 
-from error import InvalidUsage
+#from error import InvalidUsage
 from reccomend import matching_score
 
 app = Flask(__name__)
@@ -22,11 +22,11 @@ def ping():
     return 'Jarvis, start the engines.'
 
 
-@app.errorhandler(InvalidUsage)
-def handle_invalid_usage(error):
-    response = jsonify(error.to_dict())
-    response.status_code = error.status_code
-    return response
+# @app.errorhandler(InvalidUsage)
+# def handle_invalid_usage(error):
+#     response = jsonify(error.to_dict())
+#     response.status_code = error.status_code
+#     return response
 
 
 @app.route('/getReccomendations', methods=['POST'])
