@@ -3,24 +3,23 @@
 
 # ## Imports
 
+import math
+import re
+import pickle
+import pandas as pd
+import copy
+import numpy as np
+import string
+import os
+from num2words import num2words
+from collections import Counter
+from nltk.stem import PorterStemmer
+from nltk.tokenize import word_tokenize
+from nltk.corpus import stopwords
 import nltk
 nltk.download('stopwords')
 nltk.download('punkt')
 
-from nltk.corpus import stopwords
-from nltk.tokenize import word_tokenize
-from nltk.stem import PorterStemmer
-from collections import Counter
-from num2words import num2words
-import nltk
-import os
-import string
-import numpy as np
-import copy
-import pandas as pd
-import pickle
-import re
-import math
 
 print('loading and parsing data')
 alpha = 0.3
@@ -43,9 +42,10 @@ for i in folders:
         file_name = file_name[2:]
         c = True
     for j in range(len(file_name)):
-        dataset.append((str(i) +"/"+ str(file_name[j]), file_title[j]))
+        dataset.append((str(i) + "/" + str(file_name[j]), file_title[j]))
 
 print('data loaded.')
+
 
 def parse_doc(id):
     file = open(dataset[id][0], 'r', encoding='cp1250')
@@ -70,7 +70,6 @@ def remove_stop_words(data):
     return new_text
 
 
-
 def remove_punctuation(data):
     symbols = "!\"#$%&()*+-./:;<=>?@[\]^_`{|}~\n"
     for i in range(len(symbols)):
@@ -80,21 +79,18 @@ def remove_punctuation(data):
     return data
 
 
-
 def remove_apostrophe(data):
     return np.char.replace(data, "'", "")
 
 
-
 def stemming(data):
-    stemmer= PorterStemmer()
-    
+    stemmer = PorterStemmer()
+
     tokens = word_tokenize(str(data))
     new_text = ""
     for w in tokens:
         new_text = new_text + " " + stemmer.stem(w)
     return new_text
-
 
 
 def convert_numbers(data):
@@ -110,19 +106,20 @@ def convert_numbers(data):
     return new_text
 
 
-
 def preprocess(data):
     data = convert_lower_case(data)
-    data = remove_punctuation(data) #remove comma seperately
+    data = remove_punctuation(data)  # remove comma seperately
     data = remove_apostrophe(data)
     data = remove_stop_words(data)
     data = convert_numbers(data)
     data = stemming(data)
     data = remove_punctuation(data)
     data = convert_numbers(data)
-    data = stemming(data) #needed again as we need to stem the words
-    data = remove_punctuation(data) #needed again as num2word is giving few hypens and commas fourty-one
-    data = remove_stop_words(data) #needed again as num2word is giving stop words 101 - one hundred and one
+    data = stemming(data)  # needed again as we need to stem the words
+    # needed again as num2word is giving few hypens and commas fourty-one
+    data = remove_punctuation(data)
+    # needed again as num2word is giving stop words 101 - one hundred and one
+    data = remove_stop_words(data)
     return data
 
 
@@ -137,7 +134,7 @@ for i in dataset[:len(dataset)]:
     file = open(i[0], 'r', encoding="utf8", errors='ignore')
     text = file.read().strip()
     file.close()
-    
+
     titles.append(i[1])
     texts.append(text)
     processed_text.append(word_tokenize(str(preprocess(text))))
@@ -177,6 +174,7 @@ for i in doc_freq:
 
 total_vocab = [x for x in doc_freq]
 
+
 def get_doc_freq(word):
     try:
         c = doc_freq[word]
@@ -189,34 +187,35 @@ def get_doc_freq(word):
 
 tf_idf = {}
 for i in range(len(df)):
-    
+
     tokens = df.processed_text[i]
     counter = Counter(tokens + df.processed_title[i])
     words_count = len(tokens + df.processed_title[i])
-    
+
     for token in np.unique(tokens):
-        
+
         tf = counter[token]/words_count
         document_freq = get_doc_freq(token)
         idf = np.log((len(df)+1)/(document_freq+1))
-        
+
         tf_idf[df.titles[i], token] = tf*idf
 
 
 # calulcating tf_idf for the title
 tf_idf_title = {}
 for i in range(len(df)):
-    
+
     tokens = processed_title[i]
     counter = Counter(tokens + processed_text[i])
     words_count = len(tokens + processed_text[i])
 
     for token in np.unique(tokens):
-        
+
         tf = counter[token]/words_count
         document_freq = get_doc_freq(token)
-        idf = np.log((len(df)+1)/(document_freq+1)) #numerator is added 1 to avoid negative values
-        
+        # numerator is added 1 to avoid negative values
+        idf = np.log((len(df)+1)/(document_freq+1))
+
         tf_idf_title[df.titles[i], token] = tf*idf
 
 
@@ -241,18 +240,25 @@ def matching_score(num_responses, query):
     query_weights = {}
 
     for key in tf_idf:
-        
+
         if key[1] in tokens:
             try:
                 query_weights[key[0]] += tf_idf[key]
             except:
                 query_weights[key[0]] = tf_idf[key]
-    
-    query_weights = sorted(query_weights.items(), key=lambda x: x[1], reverse=True)    
+
+    query_weights = sorted(query_weights.items(),
+                           key=lambda x: x[1], reverse=True)
     list_of_titles = []
-    
+
     for i in query_weights[:num_responses]:
+        print(i[0])
         list_of_titles.append(i[0])
-    
+
+    books = []
+    # for book in list_of_titles:
+
     return query, list_of_titles
-    
+
+
+matching_score(3, "love")
