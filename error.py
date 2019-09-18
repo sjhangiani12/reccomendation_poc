@@ -1,3 +1,7 @@
+"""
+Credit: Catherine Nelson, Concur Labs
+"""
+
 class InvalidUsage(Exception):
     """http://flask.pocoo.org/docs/1.0/patterns/apierrors/"""
 
