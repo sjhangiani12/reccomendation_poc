@@ -1,6 +1,6 @@
 # Simple Book Reccomendation Model
 
-This repository is a Proof of Concept (P.O.C) of the simplest form to demonstrate the capabilities of Machine Learning in the public sector.
+This repository is a Proof of Concept (P.O.C) of the simplest form to demonstrate the capabilities of Machine Learning in the public sector. All work here is done on behalf of the Kommune of Aarhus, in Aarhus Denmark.
 
 ### Data:
 The data used in this proof of concept was found in a public repository, and can be access [here](https://github.com/williamscott701/Information-Retrieval/tree/master/2.%20TF-IDF%20Ranking%20-%20Cosine%20Similarity%2C%20Matching%20Score). 
