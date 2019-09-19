@@ -39,7 +39,6 @@ Returns:
 ```pip install -r requirements.txt```
 
 2. Run server on local machine:
-
 ```python server.py``` (runs on localhost:3000)
 
 
