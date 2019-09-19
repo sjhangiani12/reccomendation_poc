@@ -9,7 +9,7 @@ The data used in this proof of concept was found in a public repository, and can
 ### APIs: 
 
 #### API access:
-Hosted at sjhan12.pythonanywhere.com/getReccomendation.
+Hosted at [sjhan12.pythonanywhere.com/getReccomendation](https://sjhan12.pythonanywhere.com/getReccomendation).
 
 Example POST body for /getReccomendation:
 ```
@@ -17,7 +17,6 @@ Example POST body for /getReccomendation:
     "numResponses": 6,
     "query": "love"
 }
-
 ```
 
 Returns: 
