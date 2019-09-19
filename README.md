@@ -5,6 +5,8 @@ This repository is a Proof of Concept (P.O.C) of the simplest form to demonstrat
 ### Data:
 The data used in this proof of concept was found in a public repository, and can be access [here](https://github.com/williamscott701/Information-Retrieval/tree/master/2.%20TF-IDF%20Ranking%20-%20Cosine%20Similarity%2C%20Matching%20Score). 
 
+### Model:
+The model is a simple KNN model, converting the texts in this dataset and subsequent queries to vectors using Bag of Words and then applying a TF-IDF transformation on these vectors. Using the TF-IDF vectors, the model uses similarity metric to determine the highest match. 
 
 ### APIs: 
 
@@ -50,5 +52,5 @@ Install Python 3 from [here](https://www.anaconda.com/distribution/).
 
 
 #### TODO: 
-- Add a ReadMe
-- Comparmentalize code
+- Look into what similarity metric is in the model.
+- Comparmentalize code.
