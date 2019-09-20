@@ -49,8 +49,3 @@ Returns:
 On a Mac, ensure that xcode is installed.
 
 Install Python 3 from [here](https://www.anaconda.com/distribution/).
-
-
-#### TODO: 
-- Look into what similarity metric is in the model.
-- Comparmentalize code.
